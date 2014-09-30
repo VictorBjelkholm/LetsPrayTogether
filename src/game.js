@@ -43,6 +43,9 @@ function Unit(type) {
 function preload () {
     game.load.image('unit', 'assets/unit.png');
     game.load.image('selection', 'assets/selection.png');
+
+		game.load.image('tileset', 'assets/tilemap.png');
+		game.load.tilemap('map', 'assets/tiled_map.json', null, Phaser.Tilemap.TILED_JSON);
 }
 
 var units = [];
@@ -72,6 +75,18 @@ function isOverUnit() {
 }
 
 function create() {
+
+		game.canvas.oncontextmenu = function (e) {
+			console.log('Detecting rightclick')
+			e.preventDefault();
+		}
+
+		map = game.add.tilemap('map');
+		map.addTilesetImage('tileset');
+		layer = map.createLayer('Tile Layer 1');
+		layer.resizeWorld();
+		map.setCollisionBetween(0, 100);
+
 		var unit = new Unit();
 		units.push(unit)
 }
